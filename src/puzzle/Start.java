@@ -20,24 +20,25 @@ public class Start extends JFrame implements ActionListener {
     private final JButton start;
     private final JButton about;
     private final JButton exit;
+    private final JButton demo;
+
     private int xOffset;
     private int yOffset;
 
     // Le constructeur de la classe Start
     public Start() {
-        setUndecorated(true);
 
-        customFrameBar();
+        customFrameBar(this, 700, 40, 590);
 
         setLayout(null); // Définir la disposition à null pour permettre un positionnement manuel des éléments
         setPreferredSize(new Dimension(700, 600)); // Définir les dimensions préférées de la fenêtre
 
-        JLabel name = new JLabel(new ImageIcon(new ImageIcon("src/icon.png").getImage().getScaledInstance(250, 150, 1)));
-        name.setBounds(430, 150, 250, 150);
+        JLabel name = new JLabel(new ImageIcon(new ImageIcon("resources/images/icon.png").getImage().getScaledInstance(250, 150, 1)));
+        name.setBounds(430, 130, 250, 150);
         this.add(name);
 
         // Ajouter un bouton "Start" pour lancer le jeu
-        start = new JButton(new ImageIcon(new ImageIcon("src/start2.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+        start = new JButton(new ImageIcon(new ImageIcon("resources/images/start2.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
         start.setBackground(new Color(0, 0, 0, 0));
         start.setBounds(420, 320, 250, 60);
         start.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -45,70 +46,92 @@ public class Start extends JFrame implements ActionListener {
         start.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                start.setIcon(new ImageIcon(new ImageIcon("src/start2.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
+                start.setIcon(new ImageIcon(new ImageIcon("resources/images/start2.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                start.setIcon(new ImageIcon(new ImageIcon("src/start2.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+                start.setIcon(new ImageIcon(new ImageIcon("resources/images/start2.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
             }
 
         });
         this.add(start);
 
         // Ajouter un bouton "Start" pour lancer le jeu
-        about = new JButton(new ImageIcon(new ImageIcon("src/about.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+        demo = new JButton(new ImageIcon(new ImageIcon("resources/images/demo.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+        demo.setBackground(new Color(0, 0, 0, 0));
+        demo.setBounds(420, 380, 250, 60);
+        demo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        demo.addActionListener(this); // Ajouter un écouteur d'événements pour le clic
+        demo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                demo.setIcon(new ImageIcon(new ImageIcon("resources/images/demo.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                demo.setIcon(new ImageIcon(new ImageIcon("resources/images/demo.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+            }
+
+        });
+        this.add(demo);
+
+        // Ajouter un bouton "Start" pour lancer le jeu
+        about = new JButton(new ImageIcon(new ImageIcon("resources/images/about.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
 
         about.setBackground(new Color(0, 0, 0, 0));
-        about.setBounds(420, 380, 250, 60);
+        about.setBounds(420, 440, 250, 60);
         about.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         about.addActionListener(this); // Ajouter un écouteur d'événements pour le clic
         about.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                about.setIcon(new ImageIcon(new ImageIcon("src/about.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
+                about.setIcon(new ImageIcon(new ImageIcon("resources/images/about.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                about.setIcon(new ImageIcon(new ImageIcon("src/about.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+                about.setIcon(new ImageIcon(new ImageIcon("resources/images/about.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
             }
 
         });
         this.add(about);
 
         // Ajouter un bouton "Start" pour lancer le jeu
-        exit = new JButton(new ImageIcon(new ImageIcon("src/exit.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+        exit = new JButton(new ImageIcon(new ImageIcon("resources/images/exit.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
         exit.setBackground(new Color(0, 0, 0, 0));
-        exit.setBounds(420, 440, 250, 60);
+        exit.setBounds(420, 500, 250, 60);
         exit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         exit.addActionListener(this); // Ajouter un écouteur d'événements pour le clic
         exit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                exit.setIcon(new ImageIcon(new ImageIcon("src/exit.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
+                exit.setIcon(new ImageIcon(new ImageIcon("resources/images/exit.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                exit.setIcon(new ImageIcon(new ImageIcon("src/exit.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+                exit.setIcon(new ImageIcon(new ImageIcon("resources/images/exit.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
             }
 
         });
         this.add(exit);
 
-        // Ajouter une image de fond pour la fenêtre
-        JLabel bg = new JLabel(new ImageIcon(new ImageIcon("bg4.jpg").getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH)));
+        // Ajouter une image de fond pour la fenêtre getClass().getResource(imagePath)
+        JLabel bg = new JLabel(new ImageIcon(new ImageIcon("resources/images/bg4.jpg").getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH)));
         bg.setBounds(0, 40, 400, 600);
         this.add(bg);
         this.pack(); // Ajuster la taille de la fenêtre en fonction des éléments
         this.setLocationRelativeTo(null); // Centrer la fenêtre sur l'écran
     }
 
-    private void customFrameBar() {
+    private void customFrameBar(JFrame f, int width, int height, int x) {
+        f.setUndecorated(true);
+
         JPanel frameBar = new JPanel(null);
         frameBar.setBackground(Color.decode("#387ba5"));
-        frameBar.setBounds(0, 0, 700, 40);
+        frameBar.setBounds(0, 0, width, height);
 
         frameBar.addMouseListener(new MouseAdapter() {
             @Override
@@ -135,12 +158,12 @@ public class Start extends JFrame implements ActionListener {
             }
         });
 
-        JLabel icon = new JLabel(new ImageIcon(new ImageIcon("src/icon.png").getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH)));
+        JLabel icon = new JLabel(new ImageIcon(new ImageIcon("resources/images/icon.png").getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH)));
         icon.setBounds(5, 5, 40, 30);
         frameBar.add(icon);
 
         JButton minimizeButton = new JButton("_");
-        minimizeButton.setBounds(590, -20, 60, 70);
+        minimizeButton.setBounds(x, -20, 60, 70);
         minimizeButton.setForeground(Color.WHITE);
         minimizeButton.setFont(new Font("Arial", Font.BOLD, 16));
         minimizeButton.setBackground(new Color(0, 0, 0, 0));
@@ -162,7 +185,7 @@ public class Start extends JFrame implements ActionListener {
         });
 
         JButton exitButton = new JButton("X");
-        exitButton.setBounds(645, -5, 60, 50);
+        exitButton.setBounds(x + 55, -5, 60, 50);
         exitButton.setBackground(new Color(0, 0, 0, 0));
         exitButton.setForeground(Color.WHITE);
         exitButton.setFont(new Font("Arial", Font.BOLD, 16));
@@ -188,10 +211,10 @@ public class Start extends JFrame implements ActionListener {
         JLabel title = new JLabel("Puzzle Game");
         title.setFont(new Font("Z003", Font.BOLD, 20));
         title.setForeground(Color.white);
-        title.setBounds(700 / 2 - 50, 10, 100, 30);
+        title.setBounds(width / 2 - 50, 10, 100, 30);
         frameBar.add(title);
 
-        add(frameBar);
+        f.add(frameBar);
     }
 
     // La méthode principale
@@ -218,37 +241,10 @@ public class Start extends JFrame implements ActionListener {
         } else if (e.getSource() == exit) {
             dispose();
         } else if (e.getSource() == about) {
-            JFrame sabout = new JFrame("À propos du jeu");
-            sabout.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            sabout.setSize(500, 600);
-            sabout.setLocationRelativeTo(null);
+            new About();
+        } else if (e.getSource() == demo) {
+            new Demo();
 
-            JLabel messageLabel = new JLabel("<html><body style='font-family: Arial, sans-serif; font-size: 14px; text-align: center'>"
-                    + "<h2 style='color: #FF0000;'>Jigsaw HSR</h2>"
-                    + "<p><strong>Version :</strong> 1.0</p>"
-                    + "<p><strong>Développeur :</strong> Soumia Rokia</p>"
-                    + "<p><strong>Date de création :</strong> 29 mai 2023</p>"
-                    + "<br>"
-                    + "<p>Ce jeu de puzzle a été créé avec Java Swing.</p>"
-                    + "<h3 style='color: #0000FF;'>Instructions du jeu :</h3>"
-                    + "<ul style='text-align: left'>"
-                    + "<li>Déplacez les pièces du puzzle en cliquant dessus avec la souris ou en utilisant les flèches du clavier.</li>"
-                    + "<li>Le but est de reconstituer l'image en déplaçant les pièces dans le bon ordre.</li>"
-                    + "<li>Utilisez le bouton 'Back' pour revenir en arrière et annuler votre dernier mouvement.</li>"
-                    + "<li>Mettez le jeu en pause en cliquant sur le bouton de pause.</li>"
-                    + "<li>Utilisez le bouton de réinitialisation pour recommencer le jeu à tout moment.</li>"
-                    + "<li>Terminez le jeu en replaçant toutes les pièces dans le bon ordre.</li>"
-                    + "<li>Le jeu se termine également si vous quittez la fenêtre du jeu.</li>"
-                    + "</ul>"
-                    + "<br>"
-                    + "<p>Amusez-vous bien !</p>"
-                    + "</body></html>");
-            messageLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
-            messageLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            messageLabel.setBounds(20, 50, 360, 200);
-            sabout.add(messageLabel);
-
-            sabout.setVisible(true);
         }
     }
 

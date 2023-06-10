@@ -36,18 +36,18 @@ public class SetLevel extends JFrame implements ActionListener {
     private int currentImage = 0;
     ArrayList<String> imageFiles = new ArrayList<>() {
         {
-            add("src/cow.jpg");
-            add("src/dolphin.jpg");
-            add("src/Nasa.jpg");
+            add("resources/images/cow.jpg");
+            add("resources/images/dolphin.jpg");
+            add("resources/images/Nasa.jpg");
         }
     };
 
     // Définition de la classe SetLevel
     public SetLevel() {
-        setUndecorated(true);//tagla3 li fiha - et x
+
         customFrameBar();
         this.setLayout(null);//bach nwalou n9adou npozitiono lobj kima rana baghyin
-
+        this.getContentPane().setBackground(Color.decode("#d3c3b6"));
         //hight ta3 l'ecran-panel
         int screenHeight = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
         int ScreenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;//3rd ta3 ay pc
@@ -59,17 +59,17 @@ public class SetLevel extends JFrame implements ActionListener {
         this.add(intro);
 
         //
-        JButton fileChooserButton = new JButton(new ImageIcon(new ImageIcon("src/choose.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
+        JButton fileChooserButton = new JButton(new ImageIcon(new ImageIcon("resources/images/choose.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
         fileChooserButton.setBounds(ScreenWidth / 2 + 150, 30, 100, 60);
         fileChooserButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                fileChooserButton.setIcon(new ImageIcon(new ImageIcon("src/choose.png").getImage().getScaledInstance(60 + 20, 60 + 20, Image.SCALE_FAST)));
+                fileChooserButton.setIcon(new ImageIcon(new ImageIcon("resources/images/choose.png").getImage().getScaledInstance(60 + 20, 60 + 20, Image.SCALE_FAST)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                fileChooserButton.setIcon(new ImageIcon(new ImageIcon("src/choose.png").getImage().getScaledInstance(60, 60, Image.SCALE_FAST)));
+                fileChooserButton.setIcon(new ImageIcon(new ImageIcon("resources/images/choose.png").getImage().getScaledInstance(60, 60, Image.SCALE_FAST)));
             }
 
         });
@@ -83,19 +83,20 @@ public class SetLevel extends JFrame implements ActionListener {
 
         imagePanel = new JPanel();
         imagePanel.setBounds(ScreenWidth / 2 - 340, 90, 680, 480);
+        imagePanel.setOpaque(false);
         add(imagePanel);
 
         ImageIcon image = new ImageIcon(imageFiles.get(0));
         imageLabel = new JLabel(new ImageIcon(image.getImage().getScaledInstance(680, 480, Image.SCALE_FAST)));
         imagePanel.add(imageLabel);
 
-        prevButton = new JButton(new ImageIcon(new ImageIcon("src/prev.png").getImage().getScaledInstance(80, 100, Image.SCALE_SMOOTH)));
+        prevButton = new JButton(new ImageIcon(new ImageIcon("resources/images/prev.png").getImage().getScaledInstance(80, 100, Image.SCALE_SMOOTH)));
         prevButton.setBackground(new Color(0, 0, 0, 0));
         prevButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         prevButton.setBounds(ScreenWidth / 2 - 500, 280, 100, 100);
         add(prevButton);
 
-        nextButton = new JButton(new ImageIcon(new ImageIcon("src/next.png").getImage().getScaledInstance(80, 100, Image.SCALE_SMOOTH)));
+        nextButton = new JButton(new ImageIcon(new ImageIcon("resources/images/next.png").getImage().getScaledInstance(80, 100, Image.SCALE_SMOOTH)));
         nextButton.setBackground(new Color(0, 0, 0, 0));
         nextButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         nextButton.setBounds(ScreenWidth / 2 + 400, 280, 100, 100);
@@ -120,22 +121,23 @@ public class SetLevel extends JFrame implements ActionListener {
 
         // Création et personnalisation du JPanel panelSelectLevel
         panelSelectLevel = new JPanel(null);
-        panelSelectLevel.setBounds(0, 600, ScreenWidth, 60);
+        panelSelectLevel.setBounds(0, 600, ScreenWidth, 100);
+        panelSelectLevel.setOpaque(false);
         this.add(panelSelectLevel);
 
         // Création des boutons radio et positionnement
-        easy = createRadioButton("Easy", ScreenWidth / 2 - 500);
+        easy = createRadioButton("<html><p>Easy<br><span style='font-size:20;'>3x3</span></p></html>", ScreenWidth / 2 - 500);
         easy.setSelected(true);
-        medium = createRadioButton("Medium", ScreenWidth / 2 - 200);
-        hard = createRadioButton("Hard", ScreenWidth / 2 + 100);
-        so_hard = createRadioButton("So Hard", ScreenWidth / 2 + 400);
+        medium = createRadioButton("<html><p>Medium<br><span style='font-size:20;'>4x4</span></p></html>", ScreenWidth / 2 - 200);
+        hard = createRadioButton("<html><p>Hard<br><span style='font-size:20;'>5x5</span></p></html>", ScreenWidth / 2 + 100);
+        so_hard = createRadioButton("<html><p>So Hard<br><span style='font-size:20;'>6x6</span></p></html>", ScreenWidth / 2 + 400);
 
         // Regroupement des boutons radio en un groupe
         groupButtonLevel();
 
         // Création et personnalisation des boutons play et exitButton
-        play = new JButton(new ImageIcon(new ImageIcon("src/playbtn.png").getImage().getScaledInstance(200, 190, Image.SCALE_FAST)));
-        play.setBounds(ScreenWidth / 2 - 100, 660, 200, 50);
+        play = new JButton(new ImageIcon(new ImageIcon("resources/images/playbtn.png").getImage().getScaledInstance(200, 190, Image.SCALE_DEFAULT)));
+        play.setBounds(ScreenWidth / 2 - 70, 660, 140, 50);
         play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         play.setBackground(new Color(0, 0, 0, 0));
 
@@ -143,12 +145,12 @@ public class SetLevel extends JFrame implements ActionListener {
         play.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                play.setIcon(new ImageIcon(new ImageIcon("src/playbtn.png").getImage().getScaledInstance(200 + 20, 190 + 20, Image.SCALE_FAST)));
+                play.setIcon(new ImageIcon(new ImageIcon("resources/images/playbtn.png").getImage().getScaledInstance(200 + 20, 190 + 20, Image.SCALE_DEFAULT)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                play.setIcon(new ImageIcon(new ImageIcon("src/playbtn.png").getImage().getScaledInstance(200, 190, Image.SCALE_FAST)));
+                play.setIcon(new ImageIcon(new ImageIcon("resources/images/playbtn.png").getImage().getScaledInstance(200, 190, Image.SCALE_DEFAULT)));
             }
 
         });
@@ -156,134 +158,21 @@ public class SetLevel extends JFrame implements ActionListener {
         this.add(play);
     }// fin du constructeur
 
-    private void ncustomFrameBar() {
-        // Add a custom frame bar
-        JPanel frameBar = new JPanel(null);
-        frameBar.setBackground(Color.decode("#387ba5"));
-        frameBar.setBounds(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, 30);
-
-        frameBar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xOffset = e.getX();
-                yOffset = e.getY();
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                setLocation(e.getXOnScreen() - xOffset, e.getYOnScreen() - yOffset);
-            }
-        });
-        frameBar.addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xOffset = e.getX();
-                yOffset = e.getY();
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                setLocation(e.getXOnScreen() - xOffset, e.getYOnScreen() - yOffset);
-            }
-        });
-
-        JButton minimizeButton = new JButton("_");
-        minimizeButton.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 60 - 50, -15, 60, 50);
-        minimizeButton.setForeground(Color.WHITE);
-        minimizeButton.setFocusable(false);
-        minimizeButton.setFont(new Font("Arial", Font.BOLD, 16));
-        minimizeButton.setBorder(null);
-        minimizeButton.setBackground(new Color(0, 0, 0, 0));
-        minimizeButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                setState(Frame.ICONIFIED);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                minimizeButton.setBackground(Color.DARK_GRAY);
-                minimizeButton.setBorder(null);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                minimizeButton.setBackground(new Color(0, 0, 0, 0));
-            }
-        });
-
-        JButton exitButton = new JButton("X");
-        exitButton.setFocusable(false);
-        exitButton.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 55, -10, 60, 50);
-        exitButton.setBackground(new Color(0, 0, 0, 0));
-        exitButton.setForeground(Color.WHITE);
-
-        exitButton.setFont(new Font("Arial", Font.BOLD, 16));
-        exitButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.exit(0);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                exitButton.setBackground(Color.RED);
-                exitButton.setBorder(null);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                exitButton.setBackground(new Color(0, 0, 0, 0));
-            }
-        });
-
-        frameBar.add(minimizeButton);
-        frameBar.add(exitButton);
-
-        JLabel title = new JLabel("Puzzle Game");
-        title.setFont(new Font("Z003", Font.BOLD, 18));
-        title.setForeground(Color.white);
-        title.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - 50, 5, 100, 30);
-        frameBar.add(title);
-
-        add(frameBar);
-    }
-
     private void customFrameBar() {
+        setUndecorated(true);//tagla3 li fiha - et x
         // Add a custom frame bar
         JPanel frameBar = new JPanel(null);
         frameBar.setBackground(Color.decode("#387ba5"));
         frameBar.setBounds(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, 40);
 
-        JLabel icon = new JLabel(new ImageIcon(new ImageIcon("src/icon.png").getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH)));
+        JLabel icon = new JLabel(new ImageIcon(new ImageIcon("resources/images/icon.png").getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH)));
         icon.setBounds(5, 5, 40, 30);
         frameBar.add(icon);
-
-        MouseAdapter frameBarMouseListener = new MouseAdapter() {
-            private int xOffset;
-            private int yOffset;
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xOffset = e.getX();
-                yOffset = e.getY();
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                setLocation(e.getXOnScreen() - xOffset, e.getYOnScreen() - yOffset);
-            }
-        };
-
-        frameBar.addMouseListener(frameBarMouseListener);
-        frameBar.addMouseMotionListener(frameBarMouseListener);
 
         JButton minimizeButton = new JButton("_");
         minimizeButton.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 60 - 50, -20, 60, 70);
         minimizeButton.setForeground(Color.WHITE);
-
         minimizeButton.setFont(new Font("Arial", Font.BOLD, 16));
-        minimizeButton.setBorder(null);
         minimizeButton.setBackground(new Color(0, 0, 0, 0));
         minimizeButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -307,7 +196,6 @@ public class SetLevel extends JFrame implements ActionListener {
         exitButton.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 55, -15, 60, 70);
         exitButton.setBackground(new Color(0, 0, 0, 0));
         exitButton.setForeground(Color.WHITE);
-
         exitButton.setFont(new Font("Arial", Font.BOLD, 16));
         exitButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -365,13 +253,13 @@ public class SetLevel extends JFrame implements ActionListener {
         // Créer un nouveau bouton radio avec le texte spécifié
         JRadioButton radioButton = new JRadioButton(text);
         // Définir l'icône sélectionnée pour le bouton radio
-        radioButton.setSelectedIcon(new ImageIcon(new ImageIcon("src/r1_o.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
+        radioButton.setSelectedIcon(new ImageIcon(new ImageIcon("resources/images/r1_o.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
         // Définir l'icône non sélectionnée pour le bouton radio
-        radioButton.setIcon(new ImageIcon(new ImageIcon("src/r1_c.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
+        radioButton.setIcon(new ImageIcon(new ImageIcon("resources/images/r1_c.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
         // Définir la police du texte du bouton radio
         radioButton.setFont(new Font("Z003", Font.ITALIC, 30));
         // Définir la position du bouton radio sur le panneau
-        radioButton.setBounds(x, 0, 150, 30);
+        radioButton.setBounds(x, 0, 150, 60);
 
         radioButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         // Ajouter le bouton radio au panneau "panelSelectLevel"
