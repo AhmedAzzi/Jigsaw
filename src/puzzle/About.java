@@ -34,23 +34,21 @@ public class About extends JFrame {
 
     public About() {
         this.setSize(500, 500);
-        this.setLocationRelativeTo(null);
-
-        customFrameBar();
+        this.setLocationRelativeTo(null);// bah tji fel wast
+        customFrameBar();//framebare li jay foug
         setupAboutPanel();
         setupInstructionPanel();
         this.add(aboutPanel);
-
         this.setVisible(true);
     }
 
     private void setupAboutPanel() {
-        aboutPanel = new JPanel();
-        aboutPanel.setLayout(null);
+        aboutPanel = new JPanel(null);
         aboutPanel.setBackground(Color.decode("#c5935e"));
         //JLabel titleLabel = new JLabel("Jigsaw HSR");
-        JLabel titleLabel = new JLabel("<html><body style='font-family: Z003, sans-serif; font-size: 24; text-align: center'>"
-                + "<h2>Jigsaw HSR</h2>"
+        JLabel titleLabel = new JLabel(
+                "<html><body style='font-family: Z003, sans-serif; font-size: 24; text-align: center'>"
+                + "<h1 style='font-size: 28'>Jigsaw HSR</h1>"
                 + "<p><strong>Version :</strong> 1.0</p>"
                 + "<p><strong>Creation Date:</strong> May 29, 2023</p>"
                 + "<p>This puzzle game was created using Java Swing.</p>"
@@ -58,28 +56,24 @@ public class About extends JFrame {
                 + "<p><strong>Date de création :</strong> 29 mai 2023</p>"
                 + "<br>"
                 + "<p>Ce jeu de puzzle a été créé avec Java Swing.</p>"
-                + "<br>"
                 + "<p>Amusez-vous bien !</p>"
                 + "</body></html>");
-        titleLabel.setFont(new Font("Z003", Font.BOLD, 24));
-        //titleLabel.setForeground(Color.RED);
-        titleLabel.setBounds(500 / 2 - 150, 100, 300, 300);
+        titleLabel.setBounds(500 / 2 - 150, 70, 300, 390);
         aboutPanel.add(titleLabel);
 
-        JButton helpButton = new JButton("Help");
+        JButton helpButton = new JButton("Help?");
         helpButton.setBounds(500 / 2 - 50, 450, 100, 30);
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Show instruction panel when the help button is clicked
-                new Thread(() -> {
-                    SwingUtilities.invokeLater(() -> {
-                        getContentPane().remove(aboutPanel);
-                        getContentPane().add(instructionPanel);
-                        revalidate();
-                        repaint();
-                    });
-                }).start();
+                SwingUtilities.invokeLater(() -> {
+                    getContentPane().remove(aboutPanel);
+                    getContentPane().add(instructionPanel);
+                    // yakhdmou kifkif bah y3awdo yorganizo l frame
+                    revalidate();
+                    repaint();
+                });
             }
         });
         aboutPanel.add(helpButton);
@@ -91,8 +85,7 @@ public class About extends JFrame {
         instructionPanel.setBackground(Color.decode("#c5935e"));
 
         JLabel instructionLabel = new JLabel("<html><body style='font-family: Z003, sans-serif; font-size: 14px; text-align: center'>"
-                + "<h2 style='color: #FF0000;'>Jigsaw HSR - Game Instructions</h2>"
-                + "<h3 style='color: #0000FF;'>Game Instructions:</h3>"
+                + "<h1'>Jigsaw HSR - Game Instructions</h1>"
                 + "<ul style='text-align: left'>"
                 + "<li>Move puzzle pieces by clicking on them with the mouse.</li>"
                 + "<li>The goal is to reassemble the image by swaping the pieces in the correct order.</li>"
@@ -103,8 +96,6 @@ public class About extends JFrame {
                 + "<li>The game also ends if you close the game window.</li>"
                 + "</ul>"
                 + "</body></html>");
-        instructionLabel.setFont(new Font("Z003", Font.PLAIN, 16));
-        instructionLabel.setHorizontalAlignment(SwingConstants.LEFT);
         instructionLabel.setBounds(500 / 2 - 180, 40, 360, 400);
         instructionPanel.add(instructionLabel);
 
@@ -113,14 +104,12 @@ public class About extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Thread(() -> {
-                    SwingUtilities.invokeLater(() -> {
-                        getContentPane().remove(instructionPanel);
-                        getContentPane().add(aboutPanel);
-                        revalidate();
-                        repaint();
-                    });
-                }).start();
+                SwingUtilities.invokeLater(() -> {
+                    getContentPane().remove(instructionPanel);
+                    getContentPane().add(aboutPanel);
+                    revalidate();
+                    repaint();
+                });
             }
         });
         instructionPanel.add(backButton);
@@ -133,11 +122,6 @@ public class About extends JFrame {
         frameBar.setBounds(0, 0, 500, 40);
 
         frameBar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xOffset = e.getX();
-                yOffset = e.getY();
-            }
 
             @Override
             public void mouseDragged(MouseEvent e) {

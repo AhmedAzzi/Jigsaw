@@ -17,9 +17,8 @@ import javax.swing.*;
  */
 public class Demo extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private JPanel frameBar;
-    private int xOffset;
-    private int yOffset;
     private boolean isMaximized;
     private final JLabel gifLabel;
     private JButton minimizeButton;
@@ -29,23 +28,16 @@ public class Demo extends JFrame {
     private final int screenHeight;
 
     public Demo() {
-
         setLayout(null);
         setSize(700, 540);
-
         //bayna bayna - x bar fougani
         customFrameBar(this, 700, 40, 590);
         screenHeight = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
-
         // Create a JLabel to hold the GIF
-        ImageIcon gifIcon = new ImageIcon(new ImageIcon("resources/images/demo.gif").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
+        ImageIcon gifIcon = new ImageIcon(new ImageIcon("resources/images/demo4.gif").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
         gifLabel = new JLabel(gifIcon);
-
         gifLabel.setBounds(0, 40, 700, 500);
-
-        //
         this.add(gifLabel);
-
         setVisible(true);
     }
 
@@ -57,6 +49,13 @@ public class Demo extends JFrame {
         frameBar.setBounds(0, 0, width, height);
 
         //bach n7arkou l'interface
+        frameBar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                setLocation(e.getXOnScreen(), e.getYOnScreen());
+            }
+        });
+
         frameBar.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -76,11 +75,13 @@ public class Demo extends JFrame {
         minimizeButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //state ta3 frame bach yatminimiza
                 setState(Frame.ICONIFIED);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
+
                 minimizeButton.setBackground(Color.DARK_GRAY);
             }
 
@@ -109,7 +110,7 @@ public class Demo extends JFrame {
                     maximizeButton.setBounds(x, -15, 60, 70);
                     gifLabel.setBounds(0, 40, 700, 500);
                     title.setBounds(width / 2 - 50, 10, 100, 30);
-                    ImageIcon gifIcon = new ImageIcon(new ImageIcon("resources/images/demo.gif").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
+                    ImageIcon gifIcon = new ImageIcon(new ImageIcon("resources/images/demo4.gif").getImage().getScaledInstance(700, 500, Image.SCALE_DEFAULT));
                     gifLabel.setIcon(gifIcon);
                     gifLabel.setBounds(0, 40, 700, 500);
 
@@ -122,7 +123,7 @@ public class Demo extends JFrame {
                     exitButton.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 55, -15, 60, 70);
                     minimizeButton.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 60 - 50 - 50, -20, 60, 70);
                     title.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - 50, 5, 100, 30);
-                    ImageIcon gifIcon = new ImageIcon(new ImageIcon("resources/images/demo.gif").getImage().getScaledInstance(Toolkit.getDefaultToolkit().getScreenSize().width, screenHeight - 40, Image.SCALE_DEFAULT));
+                    ImageIcon gifIcon = new ImageIcon(new ImageIcon("resources/images/demo4.gif").getImage().getScaledInstance(Toolkit.getDefaultToolkit().getScreenSize().width, screenHeight - 40, Image.SCALE_DEFAULT));
                     gifLabel.setIcon(gifIcon);
                     gifLabel.setBounds(0, 40, Toolkit.getDefaultToolkit().getScreenSize().width, screenHeight - 40);
 

@@ -24,8 +24,7 @@ public class SetLevel extends JFrame implements ActionListener {
     private final JRadioButton hard;
     private final JRadioButton so_hard;
     private JButton play;
-    private int xOffset;
-    private int yOffset;
+    private JButton back;
     private int row;
     private int col;
     private String name;
@@ -121,7 +120,7 @@ public class SetLevel extends JFrame implements ActionListener {
 
         // Création et personnalisation du JPanel panelSelectLevel
         panelSelectLevel = new JPanel(null);
-        panelSelectLevel.setBounds(0, 600, ScreenWidth, 100);
+        panelSelectLevel.setBounds(0, 600, ScreenWidth, 60);
         panelSelectLevel.setOpaque(false);
         this.add(panelSelectLevel);
 
@@ -136,8 +135,8 @@ public class SetLevel extends JFrame implements ActionListener {
         groupButtonLevel();
 
         // Création et personnalisation des boutons play et exitButton
-        play = new JButton(new ImageIcon(new ImageIcon("resources/images/playbtn.png").getImage().getScaledInstance(200, 190, Image.SCALE_DEFAULT)));
-        play.setBounds(ScreenWidth / 2 - 70, 660, 140, 50);
+        play = new JButton(new ImageIcon(new ImageIcon("resources/images/play1.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+        play.setBounds(3 * ScreenWidth / 4 - 160, 660, 250, 60);
         play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         play.setBackground(new Color(0, 0, 0, 0));
 
@@ -145,17 +144,41 @@ public class SetLevel extends JFrame implements ActionListener {
         play.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                play.setIcon(new ImageIcon(new ImageIcon("resources/images/playbtn.png").getImage().getScaledInstance(200 + 20, 190 + 20, Image.SCALE_DEFAULT)));
+                play.setIcon(new ImageIcon(new ImageIcon("resources/images/play1.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_FAST)));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                play.setIcon(new ImageIcon(new ImageIcon("resources/images/playbtn.png").getImage().getScaledInstance(200, 190, Image.SCALE_DEFAULT)));
+                play.setIcon(new ImageIcon(new ImageIcon("resources/images/play1.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
             }
 
         });
         play.addActionListener(this);
         this.add(play);
+
+        back = new JButton(new ImageIcon(new ImageIcon("resources/images/back.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
+        back.setBounds(ScreenWidth / 4 - 100, 660, 250, 60);
+        back.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        back.setBackground(new Color(0, 0, 0, 0));
+
+        //howver ta3 lbutton
+        back.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                back.setIcon(new ImageIcon(new ImageIcon("resources/images/back.png").getImage().getScaledInstance(250 + 20, 180 + 20, Image.SCALE_DEFAULT)));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                back.setIcon(new ImageIcon(new ImageIcon("resources/images/back.png").getImage().getScaledInstance(250, 180, Image.SCALE_DEFAULT)));
+            }
+
+        });
+        back.addActionListener((e) -> {
+            dispose();
+            new Start().setVisible(true);
+        });
+        this.add(back);
     }// fin du constructeur
 
     private void customFrameBar() {

@@ -22,9 +22,6 @@ public class Start extends JFrame implements ActionListener {
     private final JButton exit;
     private final JButton demo;
 
-    private int xOffset;
-    private int yOffset;
-
     // Le constructeur de la classe Start
     public Start() {
 
@@ -57,7 +54,6 @@ public class Start extends JFrame implements ActionListener {
         });
         this.add(start);
 
-        // Ajouter un bouton "Start" pour lancer le jeu
         demo = new JButton(new ImageIcon(new ImageIcon("resources/images/demo.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
         demo.setBackground(new Color(0, 0, 0, 0));
         demo.setBounds(420, 380, 250, 60);
@@ -77,7 +73,6 @@ public class Start extends JFrame implements ActionListener {
         });
         this.add(demo);
 
-        // Ajouter un bouton "Start" pour lancer le jeu
         about = new JButton(new ImageIcon(new ImageIcon("resources/images/about.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
 
         about.setBackground(new Color(0, 0, 0, 0));
@@ -98,7 +93,6 @@ public class Start extends JFrame implements ActionListener {
         });
         this.add(about);
 
-        // Ajouter un bouton "Start" pour lancer le jeu
         exit = new JButton(new ImageIcon(new ImageIcon("resources/images/exit.png").getImage().getScaledInstance(250, 180, Image.SCALE_FAST)));
         exit.setBackground(new Color(0, 0, 0, 0));
         exit.setBounds(420, 500, 250, 60);
@@ -134,27 +128,17 @@ public class Start extends JFrame implements ActionListener {
         frameBar.setBounds(0, 0, width, height);
 
         frameBar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xOffset = e.getX();
-                yOffset = e.getY();
-            }
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                setLocation(e.getXOnScreen() - xOffset, e.getYOnScreen() - yOffset);
+                setLocation(e.getXOnScreen(), e.getYOnScreen());
             }
         });
         frameBar.addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xOffset = e.getX();
-                yOffset = e.getY();
-            }
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                setLocation(e.getXOnScreen() - xOffset, e.getYOnScreen() - yOffset);
+                setLocation(e.getXOnScreen(), e.getYOnScreen());
             }
         });
 

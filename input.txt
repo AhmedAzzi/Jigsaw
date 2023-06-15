@@ -1,4 +1,4 @@
-easy:7
+easy:30
 medium:60
 hard:90
 so hard:120

@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
@@ -79,6 +81,7 @@ public class PuzzlePanel extends JFrame implements ActionListener {
     private int sec;
     private JLabel label;
     private JLabel finalImage;
+    private JLabel finale;
 
     public PuzzlePanel(int height, int width, String s) {
 
@@ -88,7 +91,7 @@ public class PuzzlePanel extends JFrame implements ActionListener {
         setLayout(null);
         w = h = width;
         imageName = s;
-
+        isWin = false;
         sec = (w == 3 ? 30 : (w == 4 ? 60 : (w == 5 ? 90 : (w == 6 ? 120 : 0))));
 
         int screenHeight = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
@@ -400,11 +403,15 @@ public class PuzzlePanel extends JFrame implements ActionListener {
         if (isWin) {
             finalImage.setVisible(false);
         }
+
         if (isWin) {
-            if (seconds >= 20) {
+            if (((w == 3 && seconds >= 20) || (w == 4 && seconds >= 40) || (w == 5 && seconds >= 60)
+                    || (w == 6 && seconds >= 80))) {
+                finale.setVisible(false);
                 one.setIcon(new ImageIcon(icon01));
                 one.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 2 * 115, 335, 80 + 50, 120 + 50);
-            } else if (seconds >= 10) {
+            } else if (((w == 3 && seconds >= 10) || (w == 4 && seconds >= 20) || (w == 5 && seconds >= 30)
+                    || (w == 6 && seconds >= 40))) {
                 two.setIcon(new ImageIcon(icon02));
                 two.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width - 2 * 115 - 80, 535, 80 + 50, 120 + 50);
             } else {
@@ -504,6 +511,8 @@ public class PuzzlePanel extends JFrame implements ActionListener {
                 restartGame();
             });
         } else {
+
+            pause.setEnabled(false);
             pause.setSelected(false);
             SwingUtilities.invokeLater(() -> {
                 for (JButton button : buttons) {
@@ -519,10 +528,16 @@ public class PuzzlePanel extends JFrame implements ActionListener {
         if (e.getSource() == button) {
             try {
                 Clip clip = AudioSystem.getClip();
-                clip.open(AudioSystem.getAudioInputStream(new File("resources/audio/beep2.wav")));
-                clip.loop(0);
+                AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
+
+                //AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100.0f, 16, 2, 4, 44100.0f, false);
+                AudioInputStream audio = AudioSystem.getAudioInputStream(new File("resources/audio/winner.wav"));
+
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(format, audio);
+                clip.open(audioInputStream);
+                clip.start();
             } catch (LineUnavailableException | UnsupportedAudioFileException | IOException ex) {
-                Logger.getLogger(PuzzlePanel.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("");
             }
 
         }
@@ -570,6 +585,8 @@ public class PuzzlePanel extends JFrame implements ActionListener {
         // Si la solution correspond à la position actuelle des boutons
         if (solution.equals(currentPositions)) {
             pause.setEnabled(false);
+            restart.setEnabled(false);
+
             try {
                 BufferedReader reader = new BufferedReader(new FileReader("input.txt"));
                 String line;
@@ -616,25 +633,27 @@ public class PuzzlePanel extends JFrame implements ActionListener {
                 Logger.getLogger(PuzzlePanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             isWin = true;
-            // Arrête le timer
             timer.cancel();
+
             try {
                 Clip clip = AudioSystem.getClip();
                 try {
-                    clip.open(AudioSystem.getAudioInputStream(new File("resources/audio/winner.wav")));
+                    AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100.0f, 16, 2, 4, 44100.0f, false);
+
+                    AudioInputStream audio = AudioSystem.getAudioInputStream(new File("resources/audio/winner.wav"));
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(format, audio);
+                    clip.open(audioInputStream);
                     clip.addLineListener((LineEvent event) -> {
                         if (event.getType() == LineEvent.Type.STOP) {
                             clip.close();
                         }
                     });
                     clip.loop(2);
-
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException ex) {
-                    Logger.getLogger(PuzzlePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("");
                 }
-
             } catch (LineUnavailableException ex) {
-                Logger.getLogger(PuzzlePanel.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("");
             }
 
             new Thread(() -> {
@@ -645,7 +664,15 @@ public class PuzzlePanel extends JFrame implements ActionListener {
 
                 if ((w == 3 && seconds >= 20) || (w == 4 && seconds >= 40) || (w == 5 && seconds >= 60)
                         || (w == 6 && seconds >= 80)) {
+                    Image bg = new ImageIcon("resources/images/bg2.gif").getImage().getScaledInstance(Toolkit.getDefaultToolkit().getScreenSize().width, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height, Image.SCALE_DEFAULT);
+
+                    finale = new JLabel(new ImageIcon(bg));
+                    finale.setBounds(0, 0, panel.getWidth(), panel.getHeight() + 100);
+
+                    //finale.setBounds(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height);
+                    finalImage.add(finale);
                     moveAndScaleImage(one, one.getX(), one.getY(), panel.getWidth() / 2 - 40, panel.getHeight() / 2 - 100, 2);
+
                 } else if ((w == 3 && seconds >= 10) || (w == 4 && seconds >= 20) || (w == 5 && seconds >= 30)
                         || (w == 6 && seconds >= 40)) {
                     moveAndScaleImage(two, two.getX(), two.getY(), panel.getWidth() / 2 - 40, panel.getHeight() / 2 - 100, 2);
@@ -670,17 +697,23 @@ public class PuzzlePanel extends JFrame implements ActionListener {
                     if (w + 1 > 6) {
                         JOptionPane.showMessageDialog(null, "matigch bla bla bla", "Level End", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        new PuzzlePanel(w + 1, h + 1, imageName).setVisible(true);
+                        SwingUtilities.invokeLater(() -> {
+                            new PuzzlePanel(w + 1, h + 1, imageName).setVisible(true);
+                            dispose();
+                        });
                     }
                 } else {
                     SwingUtilities.invokeLater(() -> {
                         //finalImage.setVisible(false);
-                        // restart.doClick();
+                        //restart.doClick();
                     });
                 }
+                restart.setEnabled(true);
 
             }).start();
+
         }
+
     }
 
     public void moveAndScaleImage(JLabel icon, int startX, int startY, int endX, int endY, double scaleFactor) {
